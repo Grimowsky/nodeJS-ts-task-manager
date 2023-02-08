@@ -1,10 +1,9 @@
 import * as express from 'express';
-import { exampleController } from '../Controllers/exampleController';
+import { createRouter as createTaskRouter } from './Task.route';
 
 export const createRouter = (): express.Router => {
     const router = express.Router();
 
-    router.get('/example', exampleController);
-
+    router.use('/tasks', createTaskRouter());
     return router;
 };

@@ -21,6 +21,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   rules: {
+    'import/no-named-as-default-member': 'off',
     'prettier/prettier': 'error',
     'import/extensions': 'off',
     "@typescript-eslint/strict-boolean-expressions": "off",
