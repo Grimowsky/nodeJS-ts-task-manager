@@ -4,6 +4,6 @@ import { createRouter as createTaskRouter } from './Task.route';
 export const createRouter = (): express.Router => {
     const router = express.Router();
 
-    router.use('/tasks', createTaskRouter());
+    router.use('/task', createTaskRouter());
     return router;
 };

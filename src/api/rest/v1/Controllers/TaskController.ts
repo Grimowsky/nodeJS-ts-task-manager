@@ -3,6 +3,7 @@ import {
     type AppNext,
     type AppRes,
 } from '../../../../common/types/Request.type';
+import { Task } from '../../../../db/mongo/models/Task.model';
 
 const getAllTasks = async (
     req: AppReq,
@@ -22,7 +23,8 @@ const createTask = async (
     next: AppNext
 ): Promise<void> => {
     try {
-        res.send({ hello: 'create' });
+        await Task.create(req.body);
+        res.status(201).send();
     } catch (e) {
         next(e);
     }
