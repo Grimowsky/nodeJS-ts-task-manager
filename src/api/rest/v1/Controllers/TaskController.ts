@@ -5,6 +5,9 @@ import {
 } from '../../../../common/types/Request.type';
 import { Task } from '../../../../db/mongo/models/Task.model';
 import { createTaskValidator } from './validators/CreateTask.validator';
+import { getTaskValidator } from './validators/GetTask.validator';
+import { ExtendedError } from '../../../../utils/error/error';
+import { StatusCodes } from 'http-status-codes';
 
 const getAllTasks = async (
     req: AppReq,
@@ -38,9 +41,17 @@ const getTask = async (
     res: AppRes,
     next: AppNext
 ): Promise<void> => {
-    const { id } = req.params;
+    const { id: taskId } = req.params;
     try {
-        res.send({ hello: id });
+        await getTaskValidator(taskId);
+        const task = await Task.findOne({ _id: taskId });
+        if (!task) {
+            throw ExtendedError.of(
+                `Cannot find task with id ${taskId}`,
+                StatusCodes.BAD_REQUEST
+            );
+        }
+        res.status(200).send(task);
     } catch (e) {
         next(e);
     }
