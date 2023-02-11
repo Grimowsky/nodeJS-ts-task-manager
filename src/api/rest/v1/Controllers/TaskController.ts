@@ -4,6 +4,7 @@ import {
     type AppRes,
 } from '../../../../common/types/Request.type';
 import { Task } from '../../../../db/mongo/models/Task.model';
+import { createTaskValidator } from './validators/CreateTask.validator';
 
 const getAllTasks = async (
     req: AppReq,
@@ -23,6 +24,7 @@ const createTask = async (
     next: AppNext
 ): Promise<void> => {
     try {
+        await createTaskValidator(req.body);
         await Task.create(req.body);
         res.status(201).send();
     } catch (e) {

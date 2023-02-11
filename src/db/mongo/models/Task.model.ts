@@ -1,13 +1,9 @@
 import { Schema, model } from 'mongoose';
-
-interface ITask {
-    name: string;
-    completed: boolean;
-}
+import { type ITask } from '../../../common/types/Task.type';
 
 const TaskSchema = new Schema<ITask>({
-    name: { type: String, required: true },
-    completed: { type: Boolean, required: true },
+    name: { type: String, required: true, trim: true },
+    completed: { type: Boolean, default: false },
 });
 
 export const Task = model<ITask>('Task', TaskSchema);
