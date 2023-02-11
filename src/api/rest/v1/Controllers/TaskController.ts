@@ -12,7 +12,8 @@ const getAllTasks = async (
     next: AppNext
 ): Promise<void> => {
     try {
-        res.send({ hello: 'world!' });
+        const tasks = await Task.find({});
+        res.status(200).send({ tasks });
     } catch (e) {
         next(e);
     }
