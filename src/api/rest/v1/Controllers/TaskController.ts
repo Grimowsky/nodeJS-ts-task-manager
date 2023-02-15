@@ -45,6 +45,7 @@ const getTask = async (
     try {
         await getTaskValidator(taskId);
         const task = await Task.findOne({ _id: taskId });
+
         if (!task) {
             throw ExtendedError.of(
                 `Cannot find task with id ${taskId}`,
@@ -75,7 +76,17 @@ const deleteTask = async (
     next: AppNext
 ): Promise<void> => {
     try {
-        res.send({ hello: 'delete' });
+        const { id: taskId } = req.params;
+        await getTaskValidator(taskId);
+        const task = await Task.findOneAndDelete({ _id: taskId });
+
+        if (!task) {
+            throw ExtendedError.of(
+                `Cannot find task with id ${taskId}`,
+                StatusCodes.BAD_REQUEST
+            );
+        }
+        await res.status(200).send();
     } catch (e) {
         next(e);
     }
