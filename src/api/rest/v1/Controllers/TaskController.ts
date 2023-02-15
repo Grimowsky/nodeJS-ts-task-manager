@@ -78,7 +78,7 @@ const updateTask = async (
                 StatusCodes.BAD_REQUEST
             );
         }
-        res.send({ hello: 'update' });
+        res.send({ task });
     } catch (e) {
         next(e);
     }
