@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { ExtendedError } from '../../../../../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
 
-export const getTaskValidator = async (id: string): Promise<void> => {
+export const taskRequestValidator = async (id: string): Promise<void> => {
     const schema = z.string().min(5);
 
     try {
