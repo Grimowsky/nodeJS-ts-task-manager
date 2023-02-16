@@ -10,6 +10,8 @@ export interface UpdatedTask {
 export const updateTaskValidator = async (
     request: UpdatedTask
 ): Promise<void> => {
+    const DEFAULT_ERR_MESSAGE = 'Update task validation error';
+
     const schema = z
         .object({
             name: z.string().min(1).optional(),
@@ -26,7 +28,7 @@ export const updateTaskValidator = async (
     } catch (e) {
         const zodErr = e as ZodError;
         throw ExtendedError.of(
-            zodErr?.errors[0]?.message || 'Update task validation error',
+            zodErr?.errors[0]?.message || DEFAULT_ERR_MESSAGE,
             StatusCodes.BAD_REQUEST
         );
     }
